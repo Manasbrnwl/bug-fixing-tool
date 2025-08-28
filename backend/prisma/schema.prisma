@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  role      UserRole @default(DEVELOPER)
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  assignedTickets Ticket[] @relation("AssignedTo")
+  createdTickets  Ticket[] @relation("CreatedBy")
+  comments       Comment[]
+  projectRoles   ProjectRole[]
+
+  @@map("users")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  status      ProjectStatus @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  tickets     Ticket[]
+  members     ProjectRole[]
+  createdBy   String
+
+  @@map("projects")
+}
+
+model ProjectRole {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String
+  role      ProjectRoleType @default(MEMBER)
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@map("project_roles")
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  status      TicketStatus @default(OPEN)
+  priority    Priority     @default(MEDIUM)
+  type        TicketType   @default(BUG)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  dueDate     DateTime?
+
+  // Relations
+  projectId   String
+  project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignedTo  String?
+  assignee    User?        @relation("AssignedTo", fields: [assignedTo], references: [id])
+  createdBy   String
+  creator     User         @relation("CreatedBy", fields: [createdBy], references: [id])
+  comments    Comment[]
+  labels      Label[]
+
+  @@map("tickets")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
+
+model Label {
+  id        String   @id @default(cuid())
+  name      String
+  color     String
+  createdAt DateTime @default(now())
+
+  // Relations
+  tickets   Ticket[]
+
+  @@map("labels")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  DEVELOPER
+  TESTER
+}
+
+enum ProjectRoleType {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  ON_HOLD
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  REVIEW
+  TESTING
+  RESOLVED
+  CLOSED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketType {
+  BUG
+  FEATURE
+  TASK
+  STORY
+}
