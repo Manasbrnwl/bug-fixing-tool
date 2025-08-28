@@ -112,8 +112,8 @@ function App() {
 
               {/* Protected Routes */}
             <Route path="/" element={ <ProtectedRoute> <Layout /> </ProtectedRoute> }> 
-              <Route index element={<Navigate to="/dashboard" replace />} /> 
-              <Route path="dashboard" element={<Dashboard />} />
+              <Route index element={<Navigate to="/profile" replace />} /> 
+              {/* <Route path="dashboard" element={<Dashboard />} /> */}
               <Route path="projects" element={<Projects />} />
               <Route path="projects/create" element={<CreateProject />} />
               <Route path="projects/:id" element={<ProjectDetail />} />

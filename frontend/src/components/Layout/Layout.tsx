@@ -22,7 +22,7 @@ const Layout: React.FC = () => {
   const navigate = useNavigate();
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: Home },
+    // { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Projects', href: '/projects', icon: FolderOpen },
     { name: 'Tickets', href: '/tickets', icon: Ticket },
     { name: 'Profile', href: '/profile', icon: User },
@@ -186,22 +186,22 @@ const Layout: React.FC = () => {
             
             <div className="ml-4 flex items-center md:ml-6 space-x-4">
               {/* Quick actions */}
-              <button
+              {/* <button
                 type="button"
                 className="btn-primary btn-sm"
                 onClick={() => navigate('/tickets/create')}
               >
                 <Plus className="h-4 w-4 mr-1" />
                 New Ticket
-              </button>
+              </button> */}
               
               {/* Notifications */}
-              <button
+              {/* <button
                 type="button"
                 className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 <Bell className="h-6 w-6" />
-              </button>
+              </button> */}
               
               {/* Logout */}
               <button

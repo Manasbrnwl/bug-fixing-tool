@@ -199,17 +199,18 @@ const ProjectDetail: React.FC = () => {
             <select className="input" value={ticketType} onChange={e => setTicketType(e.target.value)}>
               <option value="BUG">Bug</option>
               <option value="FEATURE">Feature</option>
-              <option value="REQUEST">Request</option>
               <option value="TASK">Task</option>
               <option value="STORY">Story</option>
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Assign to Developer</label>
+            <label className="block text-sm font-medium text-gray-700">Assign to Member</label>
             <select className="input" value={assignee} onChange={e => setAssignee(e.target.value)}>
-              <option value="">Select developer</option>
-              {users.filter(u => u.role === 'DEVELOPER').map(u => (
-                <option key={u.id} value={u.id}>{u.firstName || u.username} {u.lastName || ''}</option>
+              <option value="">Select member</option>
+              {Array.isArray(data.members) && data.members.map((m: any) => (
+                <option key={m.user.id} value={m.user.id}>
+                  {(m.user.firstName || m.user.username) + (m.user.lastName ? ' ' + m.user.lastName : '')}
+                </option>
               ))}
             </select>
           </div>

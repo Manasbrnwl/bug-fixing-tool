@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     try {
       await login(data.email, data.password);
       toast.success('Login successful!');
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (error: any) {
       toast.error(error.message || 'Login failed');
     } finally {
@@ -54,7 +54,10 @@ const Login: React.FC = () => {
               />
             </svg>
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <div className="text-center mt-4 text-dark text-lg font-extrabold">
+            <h1>BUG TRACKER</h1>
+          </div>
+          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -132,26 +135,6 @@ const Login: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a href="#" className="font-medium text-primary-600 hover:text-primary-500">
-                Forgot your password?
-              </a>
-            </div>
-          </div>
-
           <div>
             <button
               type="submit"
@@ -169,21 +152,6 @@ const Login: React.FC = () => {
             </button>
           </div>
         </form>
-
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-gray-50 text-gray-500">Demo Credentials</span>
-            </div>
-          </div>
-          <div className="mt-4 text-center text-xs text-gray-500 space-y-1">
-            <p>Admin: admin@example.com / password123</p>
-            <p>Developer: dev@example.com / password123</p>
-          </div>
-        </div>
       </div>
     </div>
   );

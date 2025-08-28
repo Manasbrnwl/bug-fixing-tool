@@ -35,9 +35,9 @@ const Tickets: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Tickets</h1>
-        <Link to="/tickets/create" className="btn btn-primary">
+        {/* <Link to="/tickets/create" className="btn btn-primary">
           <Plus size={16} className="mr-2" /> Create Ticket
-        </Link>
+        </Link> */}
       </div>
 
       <form onSubmit={submitSearch} className="flex items-center space-x-2">
